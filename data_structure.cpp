@@ -3,7 +3,7 @@
 using namespace std;
 
 
-//¶ş·Ö²éÕÒ
+//äºŒåˆ†æŸ¥æ‰¾
 int binarySearch(int arr[], int n, int val)
 {
 	assert(arr != NULL && n > 0);
@@ -11,7 +11,7 @@ int binarySearch(int arr[], int n, int val)
 	int l = 0, r = n - 1;
 	while (l <= r)
 	{
-		int mid = l +(r - l) / 2;   //·ÀÒç³ö
+		int mid = l +(r - l) / 2;   //é˜²æº¢å‡º
 		if (arr[mid] > val)
 			r = mid - 1;
 		else if (arr[mid] < val)
@@ -26,7 +26,7 @@ int binarySearch(int arr[], int n, int val)
 	return index;
 }
 
-//·´×ªÁ´±í
+//åè½¬é“¾è¡¨
 struct ListNode {
 	int val;
 	ListNode *pNext;
@@ -56,6 +56,66 @@ ListNode* reverseLinkedList(ListNode* head)
 	}
 
 	return reverseHead;
+}
+//å­—ç¬¦ä¸²è½¬æ•´å‹
+bool g_Isvalid = true;
+
+long long str2IntCore(const char* str, bool minus)
+{
+    long long num = 0;
+    
+    int minusFlag = minus ? -1 : 1;
+    while(*str != '\0')
+    {
+        if((*str - '0') >= 0 && (*str - '0') <= 9 )
+        {
+            num = num*10 + minusFlag*(*str - '0');
+            if((!minus && num > (signed int)(0x7FFFFFFF)) || (minus && num < (signed int)(0x80000000)))
+            {
+                num = 0;
+                break;
+            }
+        }
+        else
+        {
+            num = 0;
+            break;
+        }
+        
+        str ++;
+    }
+    
+    
+    if(*str == '\0')
+    {
+        g_Isvalid = true;
+    }
+    
+    return num;
+}
+
+int str2int(const char* str)
+{
+    assert(str != NULL);
+    long long num = 0;
+    bool minus = false;
+    if(str[0] == '+')
+    {
+        str++;
+    }
+    else if(str[0] == '-')
+    {
+        minus = true;
+        str++;
+    }
+    
+    if(str[0] != '\0')
+    {
+        num = str2IntCore(str, minus);
+    }
+    
+    
+    return (int)num;
 }
 
 
