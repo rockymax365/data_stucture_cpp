@@ -118,6 +118,28 @@ int str2int(const char* str)
     return (int)num;
 }
 
+//判断链表是否有环
+
+struct ListNode{
+    int val;
+    ListNode* pNext;
+};
+
+
+bool isLoop(ListNode* head)
+{
+    ListNode* slow = head;
+    ListNode* fast = head;
+    while(slow != NULL && fast != NULL && fast->pNext != NULL)
+    {
+        slow = slow->pNext;
+        fast = fast->pNext->pNext;
+        if(slow == fast)
+            return true;
+    }
+    return false;
+}
+
 
 
 int main(void)
