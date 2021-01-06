@@ -155,3 +155,75 @@ int main(void)
 
 	return 0;
 }
+
+//冒泡排序
+void bubbleSort(int arr[], int n)
+{
+    if(arr == NULL || n <= 0)
+        return;
+    for(int i = 0; i < n-1; i ++)
+        for(int j = 0; j < n-i-1; j++)
+        {
+            if(arr[j] > arr[j+1])
+                swap(arr[j], arr[j+1]);
+        }
+    return;
+}
+//选择排序
+void selectSort(int arr[], int n)
+{
+    if(arr == NULL || n <= 0)
+        return;
+    for(int i=0; i<n-1; i++)
+    {
+        int min = i;
+        for(int j=i; j<n; j++)
+        {
+            if(arr[min] > arr[j])
+                min = j;
+        }
+        swap(arr[i],arr[min]);
+    }
+    return;
+}
+
+//插入排序
+void insertSort(int arr[], int n)
+{
+    if(arr == NULL || n <= 0)
+        return;
+    for(int i=0; i<n; i++)
+    {
+        int j = i;
+        for(; j>0; j--)
+        {
+            if(arr[j] < arr[j-1])
+            {
+                swap(arr[j], arr[j-1]);
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+    return;
+}
+//插入排序（另一个版本）
+void insertSort1(int arr[], int n)
+{
+    if(arr == NULL || n <= 0)
+        return;
+    for(int i=1; i<n; i++)
+    {
+        int temp = arr[i];
+        int j;
+        for(j=i; j>0 && arr[j-1]>temp; j--)
+        {
+            arr[j] = arr[j-1];
+        }
+        arr[j] = temp;
+    }
+    
+    return;
+}
