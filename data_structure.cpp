@@ -227,3 +227,107 @@ void insertSort1(int arr[], int n)
     
     return;
 }
+
+//归并排序
+void _merge(int arr[], int l, int mid, int r)
+{
+    int* aux = new int[r-l+1];
+    for(int i=l; i<=r; i++)
+    {
+        aux[i-l] = arr[i];
+    }
+    int i = l;
+    int j = mid +1;
+    
+    for(int k = l; k<=r; k++)
+    {
+        if(i > mid)
+        {
+            arr[k] = aux[j-l];
+            j++;
+        }
+        else if(j > r)
+        {
+            arr[k] = aux[i-l];
+            i++;
+        }
+        else if(aux[i-l] > aux[j-l])
+        {
+            arr[k] = aux[j-l];
+            j++;
+        }
+        else if(aux[i-l] <= aux[j-l])
+        {
+            arr[k] = aux[i-l];
+            i++;
+        }
+    }
+    
+    
+    delete [] aux;
+    return;
+}
+
+void _mergeSort(int arr[], int l, int r)
+{
+    if(l >= r)
+        return;
+    int mid = l + (r-l)/2;
+    _mergeSort(arr, l, mid);
+    _mergeSort(arr, mid+1,r);
+    if(arr[mid] > arr[mid+1])
+        _merge(arr, l, mid, r);
+    
+    return;
+    
+}
+
+void mergeSort(int arr[], int n)
+{
+    if(arr == NULL || n <=0)
+        return;
+    _mergeSort(arr, 0, n-1);
+}
+
+//快速排序
+
+int _partition(int arr[], int l, int r)
+{
+    swap(arr[l], arr[rand()%(r-l+1) + l]);
+    int v = arr[l];
+    int j = l;
+    for(int i=l+1; i<=r; i++)
+    {
+        if(arr[i] <= v)
+        {
+            swap(arr[j+1], arr[i]);
+            j++;
+        }
+    }
+    swap(arr[l], arr[j]);
+    
+    
+    return j;
+}
+
+void _quickSort(int arr[], int l, int r)
+{
+    if(l >= r)
+        return;
+    int p = _partition(arr, l, r);
+    _quickSort(arr, l, p);
+    _quickSort(arr, p+1, r);
+    
+    return;
+    
+}
+
+void quickSort(int arr[], int n)
+{
+    if(arr == NULL || n <= 0)
+        return;
+    srand((unsigned int)time(NULL));
+    _quickSort(arr, 0, n-1);
+    
+}
+
