@@ -331,3 +331,54 @@ void quickSort(int arr[], int n)
     
 }
 
+//是否是其子树
+struct BinaryTreeNode {
+	int val;
+	BinaryTreeNode* m_pLeft;
+	BinaryTreeNode* m_pRight;
+};
+
+bool doseTree1HasTree2(BinaryTreeNode* pRoot1, BinaryTreeNode* pRoot2)
+{
+	if (pRoot2 == NULL)
+		return true;
+	if (pRoot1 == NULL)
+		return false;
+	if (pRoot1->val != pRoot2->val)
+		return false;
+
+	return doseTree1HasTree2(pRoot1->m_pLeft, pRoot2->m_pLeft) && doseTree1HasTree2(pRoot1->m_pRight, pRoot2->m_pRight);
+}
+
+bool hasSubtree(BinaryTreeNode* pRoot1, BinaryTreeNode* pRoot2)
+{
+	bool res = false;
+	if (pRoot1 != NULL && pRoot2 != NULL)
+	{
+		if (pRoot1->val == pRoot2->val)
+		{
+			res = doseTree1HasTree2(pRoot1, pRoot2);
+		}
+		if (!res)
+		{
+			res = hasSubtree(pRoot1->m_pLeft, pRoot2);
+		}
+		if (!res)
+		{
+			res = hasSubtree(pRoot1->m_pRight, pRoot2);
+		}
+	}
+	return res;
+}
+//树深度
+
+int treeDepth(BinaryTreeNode* root)
+{
+	if (root == NULL)
+		return 0;
+	int nLeft = treeDepth(root->m_pLeft);
+	int nRight = treeDepth(root->m_pRight);
+
+	return (nLeft > nRight) ? (nLeft + 1) : (nRight + 1);
+}
+
