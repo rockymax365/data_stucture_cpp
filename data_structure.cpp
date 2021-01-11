@@ -382,3 +382,54 @@ int treeDepth(BinaryTreeNode* root)
 	return (nLeft > nRight) ? (nLeft + 1) : (nRight + 1);
 }
 
+
+//链表尾部添加节点
+void addToTail(ListNode** pHead, int val)
+{
+	ListNode* newNode = new ListNode(val);
+	if (*pHead == NULL)
+	{
+		*pHead = newNode;
+	}
+	else
+	{
+		ListNode* tempNode = *pHead;
+		while (tempNode->pNext != NULL)
+		{
+			tempNode = tempNode->pNext;
+		}
+		tempNode->pNext = newNode;
+	}
+}
+
+//移除节点
+void removeNode(ListNode** pHead, int val)
+{
+	if (pHead == NULL || *pHead == NULL)
+		return;
+	ListNode* pToBeDeleted = NULL;
+	if ((*pHead)->val == val)
+	{
+		pToBeDeleted = *pHead;
+		*pHead = ((*pHead)->pNext);
+	}
+	else
+	{
+		ListNode* pNode = *pHead;
+		while (pNode->pNext != NULL && pNode->pNext->val != val)
+		{
+			pNode = pNode->pNext;
+		}
+		if (pNode->pNext != NULL && pNode->pNext->val == val)
+		{
+			pToBeDeleted = pNode->pNext;
+			pNode->pNext = pNode->pNext->pNext;
+		}
+		if (!pToBeDeleted)
+		{
+			delete pToBeDeleted;
+			pToBeDeleted = NULL;
+		}
+	}
+}
+
