@@ -433,3 +433,52 @@ void removeNode(ListNode** pHead, int val)
 	}
 }
 
+
+//反向打印链表
+#include <stack>
+
+void printLinkedlistReversely(ListNode* head)
+{
+    if(head == NULL)
+        return;
+    stack<ListNode*> st;
+    ListNode* tempNode = head;
+    while(tempNode != NULL)
+    {
+        st.push(tempNode);
+        tempNode = tempNode->pNext;
+    }
+    
+    while(!st.empty())
+    {
+        ListNode* node;
+        node = st.top();
+        cout << node->val << endl;
+        st.pop();
+    }
+    
+}
+
+//斐波那契数列
+long long printFibN(int n)
+{
+    if(n < 0 )
+        return -1;
+    long long result[2] = {1,1};
+    if(n < 2)
+    {
+        return result[n];
+    }
+    long long fibMinusOne = 1;
+    long long fibMinusTwo = 1;
+    long long fibN = 0;
+    for(int i = 2; i <= n; i++)
+    {
+        fibN =fibMinusOne+fibMinusTwo;
+        fibMinusTwo = fibMinusOne;
+        fibMinusOne = fibN;
+    }
+    return fibN;
+}
+
+
