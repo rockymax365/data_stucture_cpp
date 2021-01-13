@@ -481,4 +481,54 @@ long long printFibN(int n)
     return fibN;
 }
 
+//找出旋转数组最小值
+int MinInOrder(int* arr, int l, int r)
+{
+    int min = arr[l];
+    for(int i=l+1; i<=r; ++i)
+    {
+        if(min > arr[i])
+            min = arr[i];
+    }
+    return min;
+}
+
+int Min(int arr[], int n)
+{
+    assert(arr == NULL || n <=0);
+    
+    int l = 0,r = n-1;
+    int mid = 0;
+    while(arr[l] >= arr[r])
+    {
+        if(r-l == 1)
+        {
+            mid = r;
+            break;
+        }
+        mid = (r+l)/2;
+        if(arr[l] == arr[mid] && arr[mid] == arr[r])
+            return MinInOrder(arr, l, r);
+        if(arr[l] >= arr[mid])
+            r = mid;
+        else if(arr[r] <= arr[mid])
+            l = mid;
+    }
+    return arr[mid];
+}
+
+//判断二进制整数中为1的个数
+int NumOf1(int n)
+{
+    int res = 0;
+    unsigned int temp = 1;
+    if(n & temp)
+    {
+        ++res;
+        temp = temp << 1;
+    }
+    return res;
+}
+
+
 
