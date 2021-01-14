@@ -530,5 +530,91 @@ int NumOf1(int n)
     return res;
 }
 
+//数值的整数次方
+bool g_invalidIput = false;
+
+bool isEqual(double num1, double num2)
+{
+	return (abs(num1 - num2) < 0.000001) ? true : false;
+}
+
+double PowerWithUnsigned(double base, unsigned int exponent)
+{
+	double res = 1.0;
+	for (int i = 0; i < exponent; i++)
+	{
+		res = res * base;
+	}
+	return res;
+}
+
+double Power(double base, int exponent)
+{
+	double res = 0.0;
+	if ((exponent < 0) && isEqual(base, 0.0))
+	{
+		g_invalidIput = true;
+		return res;
+	}
+	bool isNegtive = false;
+	if (exponent < 0)
+	{
+		isNegtive = true;
+		exponent = -1 * exponent;
+	}
+	res = PowerWithUnsigned(base, exponent);
+	if (isNegtive)
+		res = 1.0 / res;
+
+	return res;
+}
+
+
+
+//打印从1到n最大n位数
+void PrintNum(char* ch)
+{
+	int n = strlen(ch);
+	bool startPrint = false;
+	for (int i = 0; i < n; i++)
+	{
+		if (ch[i] != '0')
+		{
+			startPrint = true;
+		}
+		if (startPrint)
+		{
+			cout << ch[i];
+		}
+	}
+	cout << endl;
+	return;
+}
+void PrintNumRecursively(char* ch, int n, int index)
+{
+	if (index = n - 1)
+		PrintNum(ch);
+	for (int i = 0; i < 10; i++)
+	{
+		ch[index + 1] = '0' + i;
+		PrintNumRecursively(ch, n, index + 1);
+	}
+
+}
+void Print1toNOfMaxDigit(int n)
+{
+	if (n <= 0)
+		return;
+	char* ch = new char[n + 1];
+	ch[n] = '\0';
+	for (int i = 0; i < 10; i++)
+	{
+		ch[0] = i + '0';
+		PrintNumRecursively(ch, n, 0);
+	}
+	delete ch;
+	return;
+}
+
 
 
