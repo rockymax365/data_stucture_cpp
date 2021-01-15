@@ -616,5 +616,57 @@ void Print1toNOfMaxDigit(int n)
 	return;
 }
 
+//O(1)删除节点
+void deleteNode(ListNode** pListHead, ListNode* toBeDeleted)
+{
+    if(pListHead == NULL || *pListHead == NULL || toBeDeleted == NULL)
+        return;
+    //待删除节点不是尾部
+    if(toBeDeleted->pNext != NULL)
+    {
+        ListNode* pNext = toBeDeleted->pNext;
+        toBeDeleted->val = pNext->val;
+        toBeDeleted->pNext = pNext->pNext;
+        delete pNext;
+        pNext = NULL;
+    }
+    //只有一个头节点
+    else if(*pListHead == toBeDeleted)
+    {
+        delete toBeDeleted;
+        toBeDeleted = NULL;
+        *pListHead = NULL;
+    }
+    else  //尾部节点
+    {
+        ListNode* pNode = *pListHead;
+        while(pNode->pNext != toBeDeleted)
+        {
+            pNode = pNode->pNext;
+        }
+        pNode->pNext = NULL;
+        delete toBeDeleted;
+    }
+}
+
+//按奇偶分为两部分
+void reOrder(int arr[], int n)
+{
+    if(arr == NULL || n <=0)
+        return;
+    int l = 0;
+    int r = n-1;
+    while(l < r)
+    {
+        while((l<r) && ((arr[l]&0x01) != 0))
+            l++;
+        while((l<r) && ((arr[r]&0x01) == 0))
+            r--;
+        if(l <r)
+            swap(arr[l],arr[r]);
+    }
+}
+
+
 
 
