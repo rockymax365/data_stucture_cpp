@@ -667,6 +667,157 @@ void reOrder(int arr[], int n)
     }
 }
 
+//二叉树镜像
+void binaryTreeMirror(BinaryTreeNode* treeNode)
+{
+	if (treeNode == NULL)
+		return;
+	if (treeNode->m_pLeft == NULL && treeNode->m_pRight == NULL)
+		return;
+	BinaryTreeNode* tempNode = treeNode->m_pLeft;
+	treeNode->m_pLeft = treeNode->m_pRight;
+	treeNode->m_pRight = tempNode;
+	if (treeNode->m_pLeft)
+		binaryTreeMirror(treeNode->m_pLeft);
+	if (treeNode->m_pRight)
+		binaryTreeMirror(treeNode->m_pRight);
+
+}
+
+//寻找链表倒数第k个节点
+ListNode* findKthFromTail(ListNode* head, int k)
+{
+	if (head == NULL || k <= 0)
+		return NULL;
+	ListNode* pAhead = head;
+	ListNode* pBehind = head;
+	for (int i = 0; i < (k - 1); i++)
+	{
+		if (pAhead != NULL)
+		{
+			pAhead = pAhead->pNext;
+		}
+		else
+		{
+			return NULL;
+		}
+	}
+	while (pAhead->pNext != NULL)
+	{
+		pAhead = pAhead->pNext;
+		pBehind = pBehind->pNext;
+	}
+
+	return pBehind;
+}
+
+//合并排序链表
+ListNode* mergeOrderedLinkedList(ListNode* pHead1, ListNode* pHead2)
+{
+	if (pHead1 == NULL)
+		return pHead2;
+	if (pHead2 == NULL)
+		return pHead1;
+	ListNode* res = NULL;
+	if (pHead1->val < pHead2->val)
+	{
+		res = pHead1;
+		res->pNext = mergeOrderedLinkedList(pHead1->pNext, pHead2);
+	}
+	else
+	{
+		res = pHead2;
+		res->pNext = mergeOrderedLinkedList(pHead1, pHead2->pNext);
+	}
+	return res;
+}
+
+//从上到下打印二叉树
+void printBinaryTreeFromTopToDown(BinaryTreeNode* pTreeRoot)
+{
+	if (pTreeRoot == NULL)
+		return;
+
+	queue<BinaryTreeNode*> q;
+	q.push(pTreeRoot);
+	while (!q.empty())
+	{
+		BinaryTreeNode* pNode = q.front();
+		cout << pNode->val << endl;
+		q.pop();
+		if (pNode->m_pLeft != NULL)
+			q.push(pNode->m_pLeft);
+		if (pNode->m_pRight != NULL)
+			q.push(pNode->m_pLeft);
+	}
+	return;
+}
+
+//找出占数组一半的值
+
+int partition(int arr[], int l, int r)
+{
+	if (l > r)
+		return -1;
+	swap(arr[l],arr[l+(rand()%(r-l+1))]);
+	int v = arr[l];
+	int j = l;
+	for (int i = l+1; i <= r; i++)
+	{
+		if (arr[i] < v)
+		{
+			swap(arr[i], arr[j + 1]);
+			j++;
+		}
+	}
+	swap(arr[l], arr[j]);
+
+	return j;
+}
+
+
+
+int findMidVal(int arr[], int n)
+{
+	assert(arr != NULL && n >= 0);
+	int res = 0;
+	int l = 0, r = n - 1;
+	int p = partition(arr, l, r);
+	int mid = n / 2;
+	while (p != mid)
+	{
+		if (p > mid)
+			r = p;
+		else
+			l = p;
+		p = partition(arr, l, r);
+	}
+
+	return arr[p];
+
+}
+
+
+//数组前n个数
+void findKSmallVal(int arr[], int n, int k)
+{
+	if (arr == NULL || n <= 0 || k <= 0 || n < k)
+		return;
+	priority_queue<int> q; //大顶堆
+	for (int i = 0; i < k; i++)
+	{
+		q.push(arr[i]);
+	}
+	for (int i = k; i < n; i++)
+	{
+		if (q.top() > arr[i])
+		{
+			q.pop();
+			q.push(arr[i]);
+		}
+	}
+}
+
 
 
 
