@@ -818,6 +818,55 @@ void findKSmallVal(int arr[], int n, int k)
 	}
 }
 
+//寻找连续子数组最大和
+int findTheGreatestOfSubArray(int arr[], int n)
+{
+	assert(arr != NULL && n > 0);
+	int* arrMaxOfNth = new int[n];
+	arrMaxOfNth[0] = arr[0];
+	for (int i = 1; i < n; i++)
+	{
+		if (arrMaxOfNth[i - 1] < 0)
+		{
+			arrMaxOfNth[i] = arr[i];
+		}
+		else
+		{
+			arrMaxOfNth[i] = arrMaxOfNth[i - 1] + arr[i];
+		}
+	}
+
+	int max = arrMaxOfNth[0];
+	for (int i = 1; i < n; i++)
+	{
+		if (arrMaxOfNth[i] > max)
+			max = arrMaxOfNth[i];
+	}
+	return max;
+}
+
+//1到n中整数1出现的次数
+int numOf1(unsigned int n)
+{
+	int res = 0;
+	while (n != 0)
+	{
+		if (n % 10 == 1)
+			res++;
+		n = n / 10;
+	}
+	return n;
+}
+int numOf1From1ToN(unsigned int n)
+{
+	int res = 0;
+	for (int i = 0; i <= n; i++)
+	{
+		res += numOf1(n);
+	}
+	return res;
+}
+
 
 
 
