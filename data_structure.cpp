@@ -867,6 +867,70 @@ int numOf1From1ToN(unsigned int n)
 	return res;
 }
 
+//寻找两个链表的公共节点
+int lengthOfLinkedList(ListNode* pHead)
+{
+    int res = 0;
+    ListNode* pNode = pHead;
+    while(pNode != NULL)
+    {
+        res++;
+        pNode = pNode->pNext;
+    }
+    return res;
+}
+
+ListNode* findCommonNode(ListNode* pHead1, ListNode* pHead2)
+{
+    if(pHead1 == NULL || pHead2 == NULL)
+        return NULL;
+    int length1 = lengthOfLinkedList(pHead1);
+    int length2 = lengthOfLinkedList(pHead2);
+    ListNode* pHeadLong = pHead1;
+    ListNode* pHeadShort = pHead2;
+    if(length1 < length2)
+    {
+        pHeadLong = pHead2;
+        pHeadShort = pHead1;
+    }
+    int longthDiff = int(abs(pHead1 - pHead2));
+    for(int i=0; i<longthDiff; i++)
+    {
+        pHeadLong = pHeadLong->pNext;
+    }
+    while(pHeadLong != NULL && pHeadShort != NULL && pHeadLong != pHeadShort)
+    {
+        pHeadLong = pHeadLong->pNext;
+        pHeadShort = pHeadShort->pNext;
+    }
+    
+    return pHeadLong;
+    
+}
+
+//寻找第一个只出现一次的字符
+char findTheFirstSingleChar(char* pString)
+{
+    if(pString == NULL)
+        return '\0';
+    int hashTable[256] = {0};
+    char* pHashKey = pString;
+    while(*pHashKey != '\0')
+    {
+        hashTable[*pHashKey]++;
+        pHashKey++;
+    }
+    pHashKey = pString;
+    while(*pHashKey != '\0')
+    {
+        if(hashTable[*pHashKey] == 1)
+            return *pHashKey;
+        pHashKey++;
+    }
+    return '\0';
+}
+
+
 
 
 
