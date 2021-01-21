@@ -930,6 +930,90 @@ char findTheFirstSingleChar(char* pString)
     return '\0';
 }
 
+//统计数组逆序对
+
+int res = 0;
+
+void merge(int arr[], int l, int mid, int r)
+{
+    int* aux = new int[r-l+1];
+    for(int i=l; i<=r; i++)
+    {
+        aux[i-l] = arr[i];
+    }
+    int i = mid, j = r;
+    for(int k=r; k>=l; k--)
+    {
+        if(i<l)
+        {
+            arr[k] = aux[j-l];
+            j--;
+        }
+        else if(j < (mid+1))
+        {
+            arr[k] = aux[i-l];
+            i--;
+        }
+        else if(aux[i-l] > aux[j-l])
+        {
+            arr[k] = aux[i-l];
+            res += (j-mid);
+            i--;
+        }
+        else if(aux[i-l] <= aux[j-l])
+        {
+            arr[k] = aux[j-l];
+            j--;
+        }
+    }
+    
+    delete [] aux;
+}
+void mergeSort(int arr[], int l, int r)
+{
+    if(l >= r)
+        return;
+    int mid = l + (r-l)/2;
+    mergeSort(arr, l, mid);
+    mergeSort(arr, mid+1, r);
+    if(arr[mid] > arr[mid+1])
+        merge(arr, l, mid, r);
+}
+
+void reversePair(int arr[], int n)
+{
+    assert(arr != NULL && n > 0);
+    
+    mergeSort(arr, 0, n-1);
+    
+}
+
+//字符串全排列
+void permutation(char* ch, char* pBegin)
+{
+    if(*pBegin == '\0')
+    {
+        return;
+    }
+    for(char* pCh = pBegin; *pCh != '\0'; pCh++)
+    {
+        char temp = *pCh;
+        *pCh = *pBegin;
+        *pBegin = temp;
+        permutation(ch,pBegin+1);
+        temp = *pCh;
+        *pCh = *pBegin;
+        *pBegin = temp;
+    }
+    
+}
+void permutation(char* ch)
+{
+    if(ch == NULL)
+        return;
+    permutation(ch,ch);
+    
+}
 
 
 
