@@ -1015,6 +1015,62 @@ void permutation(char* ch)
     
 }
 
+//判断数组是否为二叉搜索树后序遍历
+bool VerifySequeceOfBST(int arr[], int n)
+{
+	if (arr == NULL || n <= 0)
+		return false;
+	int root = arr[n - 1];
+	int i = 0;
+	for (; i < n - 1; i++)
+	{
+		if (arr[i] > root)
+			break;
+	}
+	int j = i;
+	for(; j<n-1;j++)
+	{
+		if (arr[j] < root)
+			return false;
+	}
+	bool left = true;
+	if (i > 0)
+	{
+		left = VerifySequeceOfBST(arr, i);
+	}
+	bool right = true;
+	if (j < n - 1)
+	{
+		right = VerifySequeceOfBST(arr + i, n - 1 - i);
+	}
+	return left && right;
+}
 
+
+//寻找数组中重复超过一半的数
+int FindMoreThanHalf(int arr[], int n)
+{
+	assert(arr == NULL || n <= 0);
+	int num = arr[0];
+	int times = 1;
+	for (int i = 1; i < n; i++)
+	{
+		if (times == 0)
+		{
+			num = arr[i];
+			times++;
+		}
+		else if (arr[i] == num)
+		{
+			times++;
+		}
+		else
+		{
+			times--;
+		}
+	}
+	return num;
+
+}
 
 
