@@ -1074,3 +1074,126 @@ int FindMoreThanHalf(int arr[], int n)
 }
 
 
+//数字在排序数组中出现的次数
+int FindStartIndex(int arr[], int k, int l, int r)
+{
+    if(l > r)
+        return -1;
+    
+    int mid = l + (r-1)/2;
+    if(arr[mid] == k)
+    {
+        if((mid >0 && arr[mid-1] != k) || mid == 0 )
+        {
+            return mid;
+        }
+        else
+        {
+            r = mid-1;
+        }
+    }
+    else if(arr[mid] > k)
+    {
+        r = mid -1;
+    }
+    else
+    {
+        l = mid +1;
+    }
+    
+    return FindStartIndex(arr, k, l, r);
+}
+
+int FindEndIndex(int arr[], int k, int l, int r)
+{
+    if(l > r)
+        return -1;
+    int mid = l + (r-l)/2;
+    if(arr[mid] == k)
+    {
+        if((mid < r && arr[mid +1] != k) || mid == r)
+        {
+            return mid;
+        }
+        else
+        {
+            l = mid + 1;
+        }
+    }
+    else if(arr[mid] < k)
+    {
+        l = mid + 1;
+    }
+    else
+    {
+        r = mid - 1;
+    }
+    
+    return FindEndIndex(arr, k, l, r);
+}
+
+
+int CalcNumberOfK(int arr[], int n, int k)
+{
+    int res = -1;
+    if(arr != NULL && n > 0)
+    {
+        int start = FindEndIndex(arr, k, 0, n-1);
+        int end = FindEndIndex(arr, k, 0, n-1);
+        if(start != -1 && end != -1)
+            res = end -start +1;
+    }
+    return res;
+}
+
+//计算树的深度
+
+struct BinaryTreeNode{
+    int val;
+    BinaryTreeNode* m_pLeft;
+    BinaryTreeNode* m_pRight;
+};
+
+int TreeDepth(BinaryTreeNode* pRoot)
+{
+    if(pRoot == NULL)
+        return 0;
+    int left = TreeDepth(pRoot->m_pLeft);
+    int right = TreeDepth(pRoot->m_pRight);
+    
+    return (left > right) ? (left+1) : (right +1);
+}
+
+//是否是平衡二叉树
+bool IsBalance(BinaryTreeNode* pRoot)
+{
+    if(pRoot == NULL)
+        return true;
+    int left = TreeDepth(pRoot);
+    int right = TreeDepth(pRoot);
+    if(abs(left-right) >1)
+        return false;
+    return IsBalance(pRoot->m_pLeft) && IsBalance(pRoot->m_pRight);
+}
+
+bool IsBalanced(BinaryTreeNode* pRoot, int* pDepth)
+{
+    if(pRoot == NULL)
+    {
+        *pDepth = 0;
+        return true;
+    }
+    int left, right;
+    if(IsBalanced(pRoot->m_pLeft, &left) && IsBalanced(pRoot->m_pRight, &right))
+    {
+        if(abs(left-right) >1)
+        {
+            *pDepth = 1 + (left > right ? left : right);
+            return true;
+        }
+    }
+    return false;
+}
+
+
+
